@@ -1,0 +1,364 @@
+jenkins:
+  agentProtocols:
+  - "Diagnostic-Ping"
+  - "JNLP4-connect"
+  - "OperationsCenter2"
+  - "Ping"
+  clouds:
+  - "operationsCenterAgentProvisioningService"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  disabledAdministrativeMonitors:
+  - "com.cloudbees.jenkins.support.impl.cloudbees.TcpSlaveAgentListenerMonitor"
+  globalNodeProperties:
+  - envVars:
+      env:
+      - key: "SONARQUBE_URL"
+        value: {{ sonarqube_edition }}
+  labelAtoms:
+  - name: "master"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 0
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  scmCheckoutRetryCount: 0
+  securityRealm: "operationsCenter"
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "core-mm-offline"
+      url: "file:/tmp/jenkins/war/WEB-INF/plugins/update-center.json"
+    - id: "cap-core-mm"
+      url: "https://jenkins-updates.cloudbees.com/update-center/envelope-core-mm/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+beekeeper:
+  enabled: true
+  securityWarnings:
+    enabledForCore: true
+    enabledForPlugins: true
+  upgrades:
+    autoDowngradePlugins: false
+    autoUpgradePlugins: false
+support:
+  automatedBundleConfiguration:
+    componentIds:
+    - "CloudBeesAssuranceSupport"
+    - "CloudBeesCasCBundlesSupport"
+    - "AgentsConfigFile"
+    - "ConfigFileComponent"
+    - "OtherConfigFilesComponent"
+    - "AboutBrowser"
+    - "AboutJenkins"
+    - "AboutUser"
+    - "AdministrativeMonitors"
+    - "AgentProtocols"
+    - "BuildQueue"
+    - "CustomLogs"
+    - "DumpExportTable"
+    - "EnvironmentVariables"
+    - "FileDescriptorLimit"
+    - "GCLogs"
+    - "HeapUsageHistogram"
+    - "ItemsContent"
+    - "AgentsJVMProcessSystemMetricsContents"
+    - "MasterJVMProcessSystemMetricsContents"
+    - "JenkinsLogs"
+    - "LoadStats"
+    - "LoggerManager"
+    - "Metrics"
+    - "NetworkInterfaces"
+    - "NodeMonitors"
+    - "OtherLogs"
+    - "ReverseProxy"
+    - "RootCAs"
+    - "RunningBuilds"
+    - "SlaveCommandStatistics"
+    - "SlaveLaunchLogs"
+    - "SlaveLogs"
+    - "AgentsSystemConfiguration"
+    - "MasterSystemConfiguration"
+    - "SystemProperties"
+    - "TaskLogs"
+    - "ThreadDumps"
+    - "UpdateCenter"
+    - "UserCount"
+    - "ComponentImpl"
+    - "SlowRequestComponent"
+    - "HighLoadComponent"
+    - "DeadlockRequestComponent"
+    - "OperationsCenterSupportComponent"
+    - "PipelineTimings"
+    - "PipelineThreadDump"
+    enabled: true
+    period: 1
+security:
+  anonymizeSupportBundle:
+    enabled: false
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  sSHD:
+    port: -1
+unclassified:
+  globalLibraries:
+    libraries:
+    - defaultVersion: "3-stable"
+      name: "common-lib"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              credentialsId: "SVCACCT_CICDLIBS_RO"
+              remote: "https://bitbucket.fis.dev/scm/cicdlibs/common-lib.git"
+              traits:
+              - "gitBranchDiscovery"
+              - "gitTagDiscovery"
+    - defaultVersion: "master"
+      name: "incubator-lib"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              credentialsId: "SVCACCT_CICDLIBS_RO"
+              remote: "https://bitbucket.fis.dev/scm/cicdlibs/incubator-lib.git"
+              traits:
+              - "gitBranchDiscovery"
+              - "gitTagDiscovery"
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketServerEndpoint:
+        displayName: "FIS Dev Bitbucket"
+        manageHooks: false
+        serverUrl: "https://bitbucket.fis.dev"
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  checkmarxASTScanner:
+    installations:
+    - name: "checkmarx-one-cli-latest"
+      properties:
+      - installSource:
+          installers:
+          - checkmarxInstaller:
+              updatePolicyIntervalHours: 24
+              version: "latest"
+    useAuthenticationUrl: false
+  email-ext:
+    adminRequiredForTemplateTesting: false
+    allowUnregisteredEnabled: false
+    charset: "UTF-8"
+    debugMode: false
+    defaultBody: |-
+      $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+      Check console output at $BUILD_URL to view the results.
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    defaultTriggerIds:
+    - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+    maxAttachmentSize: -1
+    maxAttachmentSizeMb: -1
+    precedenceBulk: false
+    watchingEnabled: false
+  experimentalPlugins:
+    enabled: false
+  scmGit:
+    createAccountBasedOnEmail: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "https://cloudbees-internal.dev.fiscicd.com"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+    useTls: false
+  pollSCM:
+    pollingThreadCount: 10
+  provisioningLimitConfiguration:
+    limit:
+      nodes: 10
+  sonarGlobalConfiguration:
+    buildWrapperEnabled: false
+    installations:
+    - credentialsId: "sonarqube"
+      name: "sonarqube"
+      serverUrl: {{ sonarqube_edition }}
+      triggers:
+        skipScmCause: false
+        skipUpstreamCause: false
+  usageStatisticsCloudBees:
+    usageStatisticsCollected: false
+jobs:
+  - script: >
+      pipelineJob('{{ tenant_name }}/welcome/01') {
+        displayName('01 - Hello, World')
+        description('\n\nCAAS INTRODUCTORY SERIES PART 1\n\n\nOverview\nA hello world pipeline using common-lib. This introduces the usage of common-lib which is a shared library developed for teams within FIS.\n\nThis is a trivial example mostly for demo purposes. It illustrates a very minimal pipeline that can do work.\n\nTo learn more about common-lib see https://wiki.fnis.com/display/ciocd/Shared+Libraries\n\nGetting Started\n1. Click "Build Now" and click into the build that is started. Next, click "Console Output" to see the build log.\n2. Click "Configure" and scroll down to see the pipeline code.\n\n\nNote\nThis job can be run by anyone on your team as often as needed.')
+        definition {
+          cps {
+            script('''\
+              @Library(['common-lib@3-stable']) _
+
+              node() {
+                enaLogger.log("Hello, World!")
+              }
+            '''.stripIndent())
+            sandbox()
+          }
+        }
+      }
+  - script: >
+      pipelineJob('{{ tenant_name }}/welcome/02') {
+        displayName('02 - Container Basics')
+        description('\n\nCAAS INTRODUCTORY SERIES PART 2\n\n\nOverview\nA pipeline that introduces containers provided by CaaS. Each container provides a command line tool that can perform work. By orchestrating various containers together, a pipeline can build, test, and deploy your applications across various environments.\n\nGetting Started\n1. Click "Build Now" and click into the build that is started. Next, click "Console Output" to see the build log.\n2. Click "Configure" and scroll down to see the pipeline code.\n\n\nNote\nThis job can be run by anyone on your team as often as needed.')
+        definition {
+          cps {
+            script('''\
+              String welcomeMessage = """Welcome to the CaaS intro pipeline. CaaS provides you with some basic building blocks to quickly get going with your development.
+
+              One way CaaS does this is in the form of purpose-built tools for common pipeline tasks like building applications, running static code analysis, using Helm, and many other things.
+
+              The tools available are:
+              - aws cli using container label 'aws'
+              - buildah cli using container label 'buildah'
+              - .net 6 using container label 'dotnet'
+              - golang build environment using container label 'go'
+              - helm cli using container label 'helm'
+              - java11 development kit using container label 'jdk11'
+              - jq cli using container label 'jq'
+              - kubectl cli using container label 'kubectl'
+              - sonar-scanner cli using container label 'sonar-scanner'
+              - veracode cli using container label 'veracode'
+              - yq cli using container label 'yq'
+
+              To learn more about these containers, please visit https://wiki.fnis.com/display/ciocd/Pipelines
+
+              This sample pipeline will demonstrate using a few of these tools. Something to note is that this demo pipeline is using the scripted syntax for Jenkins pipelines. If a declarative example would be more helpful, please let our product owner Scott Sylvester know so we can provide that as well.
+              """
+
+              node() {
+                stage('welcome') {
+                  println welcomeMessage
+
+                  container('buildah') {
+                    println "Any code within the `container('buildah') {}` context can use the buildah tool to help with building container images. As an example, we will print the version of the currently available buildah cli tool"
+                    sh 'buildah version'
+                    println "Much more can be done than just the above. An example of how the CaaS team is using buildah is for building the CaaS UI project itself - https://bitbucket.fis.dev/projects/CAAS/repos/caas-ui/browse/Jenkinsfile"
+                    println "For a full reference on using buildah, please see the project's github page at https://github.com/containers/buildah"
+                  }
+                  container('helm') {
+                    println 'Within the helm container, you have access to the "helm" cli'
+                    sh 'helm version'
+                  }
+                  container('oops') {
+                    println "Here we mistakenly reference a container object that doesn't exist but the pipeline can still continue unless we try to use a CLI tool that isn't available like helm. In that case, an error will be thrown that we will ignore for demo purposes."
+                    try {
+                      sh 'helm version'
+                    } catch (err) {
+                      // Your development team would handle the error in your own pipeline
+                    }
+                    println 'The above stacktrace was expected because this pipeline tried to use a CLI tool that was not available within the requested container.'
+                    println 'To learn more about the containers that are available within CaaS, please visit https://wiki.fnis.com/display/ciocd/Pipelines'
+                  }
+                }
+              }
+            '''.stripIndent())
+            sandbox()
+          }
+        }
+      }
+kube:
+  podTemplatesConfiguration:
+    templates:
+    - name: "caas"
+      runAsUser: "1000"
+      containers:
+      - name: "aws"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-helm-aws:3.6.3-1"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "buildah"
+        image: "caas-docker-release-local.docker.fis.dev/buildah/stable:v1.23.1"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "dotnet"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-dotnet60-jdk11:6.0-1-5"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "go"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-go-swagger:0.28.0-1"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "helm"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-helm:3.6.3-2"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "jdk11"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-jdk11-maven:3.8.4-1"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "jmeter"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-jmeter:5.4.3-1"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "jq"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-jq:1.6-2"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "kubectl"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-kubectl-aws:1.23.0-1"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "sonar-scanner"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-sonar-scanner:4.6.0.2311-2"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "veracode"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-veracode:20.3.6.1-3"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      - name: "yq"
+        image: "caas-docker-release-local.docker.fis.dev/jenkins/ubi8-minimal-yq:4.12.0-2"
+        command: "cat"
+        args: ""
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      imagePullSecrets:
+      - name: "caas-docker-release-local-ro"
+      label: "caas"
+      nodeUsageMode: NORMAL
+      serviceAccount: "jenkins"
+      showRawYaml: false
+      yamlMergeStrategy: "override"
